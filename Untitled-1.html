@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Lift | Inua Aliye Kando Yako</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    
+    <!-- Google Fonts: Cormorant Garamond & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&family=Reenie+Beanie&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        html, body {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+            background-color: #F9F6F0;
+            color: #121212;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .font-serif {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+        }
+
+        .font-handwriting {
+            font-family: 'Reenie Beanie', cursive;
+        }
+
+        /* SVG Grain Overlay */
+        .bg-grain {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+        }
+
+        /* Scroll Reveal Animations */
+        .reveal-fade,
+        .reveal-slide-up,
+        .reveal-scale {
+            opacity: 0;
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+
+        .reveal-slide-up {
+            transform: translateY(20px);
+        }
+
+        .reveal-scale {
+            transform: scale(0.97);
+        }
+
+        .is-visible {
+            opacity: 1 !important;
+            transform: translateY(0) scale(1) !important;
+        }
+
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+        .delay-400 { transition-delay: 400ms; }
+    </style>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        earthBackground: '#F9F6F0',
+                        earthCream: '#FDFBF7',
+                        sectionBackground: '#EFECE6',
+                        
+                        // Earthy Black & Dark Grays
+                        richBlack: '#121212',
+                        darkGrayCard: '#1E1E1E',
+                        
+                        // Earth & Gold Palette
+                        primaryText: '#121212',
+                        secondaryText: '#5A5853',
+                        sageAccent: '#5F7A4C',
+                        clayAccent: '#8C6A43',
+                        earthBorder: '#E0DACE',
+                        
+                        // Pure Gold Highlights
+                        burnishedGold: '#C59B27',
+                        softGold: '#E5C158'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-earthBackground text-primaryText antialiased selection:bg-burnishedGold/20 relative flex flex-col min-h-screen bg-grain">
+
+    <!-- Scroll Progress Indicator -->
+    <div id="progressBar" class="fixed top-0 left-0 h-[3px] bg-burnishedGold z-50 transition-all duration-150" style="width: 0%"></div>
+
+    <!-- Navigation Header -->
+    <nav id="navbar" class="fixed top-0 inset-x-0 z-40 transition-all duration-300 px-6 sm:px-12 py-3 border-b border-transparent">
+        <div class="max-w-6xl mx-auto flex items-center justify-between">
+            <a href="#" class="font-serif text-xl font-bold tracking-tight text-richBlack flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-burnishedGold inline-block"></span>
+                PROJECT <span class="text-burnishedGold">LIFT</span>
+            </a>
+            
+            <div class="hidden md:flex items-center space-x-6 text-xs uppercase font-semibold tracking-wider text-secondaryText">
+                <a href="#about" class="hover:text-burnishedGold transition-colors">Who We Are</a>
+                <a href="#collaborators" class="hover:text-burnishedGold transition-colors">Collaborators</a>
+                <a href="#mission" class="hover:text-burnishedGold transition-colors">Our Mission</a>
+                <a href="#pillars" class="hover:text-burnishedGold transition-colors">Pillars</a>
+                <a href="#gallery" class="hover:text-burnishedGold transition-colors">Gallery</a>
+                <a href="#action" class="hover:text-burnishedGold transition-colors">Action</a>
+                <a href="#connect" class="hover:text-burnishedGold transition-colors">Contact</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <a href="#action" class="bg-richBlack text-earthCream text-[11px] font-semibold uppercase tracking-widest px-4 py-2 hover:bg-burnishedGold transition-all duration-300">
+                    Donate Now
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow pt-12">
+
+        <!-- Hero Section with Custom Line Art Overlay -->
+        <section class="pt-2 pb-6 px-6 sm:px-12 max-w-5xl mx-auto relative overflow-hidden">
+            
+            <!-- Hero Top Line Art -->
+            <div class="absolute inset-0 pointer-events-none z-0 opacity-20">
+                <svg class="w-full h-full" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMin slice">
+                    <path d="M-100 120 C 300 -40, 800 180, 1300 20" stroke="#C59B27" stroke-width="1.2" stroke-dasharray="4 4"/>
+                    <path d="M-50 200 C 350 40, 850 260, 1350 100" stroke="#8C6A43" stroke-width="1.5"/>
+                    <path d="M-100 320 Q 400 120, 900 380 T 1400 200" stroke="#C59B27" stroke-width="1"/>
+                    <circle cx="200" cy="180" r="140" stroke="#8C6A43" stroke-width="0.8" opacity="0.4"/>
+                    <circle cx="1000" cy="280" r="180" stroke="#C59B27" stroke-width="0.8" opacity="0.3"/>
+                </svg>
+            </div>
+
+            <div class="space-y-3 text-center max-w-3xl mx-auto relative z-10">
+                
+                <!-- Main Headline -->
+                <h1 class="font-serif text-4xl sm:text-6xl lg:text-7xl font-bold text-richBlack leading-[1.08] tracking-tight reveal-slide-up pt-1">
+                    Inua Aliye <br>
+                    <span class="italic font-normal text-burnishedGold">Kando Yako.</span>
+                </h1>
+
+                <!-- Hero Banner Image -->
+                <div class="relative rounded-xl overflow-hidden shadow-lg border border-earthBorder group my-3 reveal-fade">
+                    <img src="IMG-20260711-WA0075-EDIT.jpg"
+                         alt="Project Lift volunteer supporting a student"
+                         class="w-full h-[260px] sm:h-[360px] object-cover object-center filter brightness-[0.95] contrast-105 group-hover:scale-105 transition-transform duration-1000">
+                    <div class="absolute inset-0 bg-gradient-to-t from-richBlack/60 via-transparent"></div>
+                    <div class="absolute bottom-3 left-4 bg-richBlack/90 text-earthCream text-[11px] px-3 py-1 font-mono tracking-wider hidden sm:block">
+                        BOOK & SUPPLY DRIVE
+                    </div>
+                </div>
+
+                <p class="text-secondaryText text-sm sm:text-base max-w-xl mx-auto font-normal leading-relaxed reveal-slide-up delay-100">
+                    Lifting one another through care, community, and hope. A student-driven collective delivering essential supplies directly to neighborhoods in need.
+                </p>
+
+                <div class="pt-1 flex flex-col sm:flex-row items-center justify-center gap-3 reveal-slide-up delay-200">
+                    <a href="#action" class="w-full sm:w-auto bg-burnishedGold text-richBlack font-bold text-[11px] tracking-widest uppercase px-6 py-3 hover:bg-richBlack hover:text-earthCream transition-all duration-300 shadow flex items-center justify-center gap-2 group">
+                        <span>Hope Begins With You</span>
+                        <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                    <a href="#about" class="w-full sm:w-auto border border-richBlack/30 text-richBlack font-semibold text-[11px] tracking-widest uppercase px-6 py-3 hover:border-richBlack hover:bg-richBlack/5 transition-all flex items-center justify-center">
+                        Read Our Story
+                    </a>
+                </div>
+
+                <div class="pt-1 reveal-fade delay-300">
+                    <p class="font-handwriting text-2xl sm:text-3xl text-clayAccent transform -rotate-1">
+                        "Lift the neighbor beside you."
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Numbers Counter Strip -->
+        <section class="border-y border-earthBorder bg-sectionBackground/60 py-6 px-6 sm:px-12 my-2 relative z-10">
+            <div class="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                <div class="space-y-0.5 reveal-slide-up delay-100">
+                    <span class="font-serif text-3xl sm:text-4xl text-burnishedGold font-bold counter" data-target="317">0</span>
+                    <p class="text-[10px] text-secondaryText uppercase tracking-widest font-semibold">Books donated</p>
+                </div>
+                <div class="space-y-0.5 reveal-slide-up delay-200">
+                    <span class="font-serif text-3xl sm:text-4xl text-burnishedGold font-bold counter" data-target="94">0</span>
+                    <p class="text-[10px] text-secondaryText uppercase tracking-widest font-semibold">Supplies delivered</p>
+                </div>
+                <div class="space-y-0.5 reveal-slide-up delay-300">
+                    <span class="font-serif text-3xl sm:text-4xl text-burnishedGold font-bold counter" data-target="3">0</span>
+                    <p class="text-[10px] text-secondaryText uppercase tracking-widest font-semibold">Schools reached</p>
+                </div>
+                <div class="space-y-0.5 reveal-slide-up delay-400">
+                    <span class="font-serif text-3xl sm:text-4xl text-burnishedGold font-bold counter" data-target="28">0</span>
+                    <p class="text-[10px] text-secondaryText uppercase tracking-widest font-semibold">Volunteers</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Who We Are Section -->
+        <section id="about" class="bg-darkGrayCard text-earthCream py-12 px-6 sm:px-12 my-6 relative overflow-hidden">
+            <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                <div class="lg:col-span-5 space-y-2 reveal-slide-up">
+                    <span class="text-[11px] font-bold tracking-widest uppercase text-softGold">OUR FOUNDATION</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl font-bold tracking-tight">Who We Are</h2>
+                    <div class="w-12 h-[2px] bg-softGold"></div>
+                </div>
+                <div class="lg:col-span-7 reveal-slide-up delay-200">
+                    <p class="text-earthCream/90 text-sm sm:text-base font-light leading-relaxed">
+                        Project Lift is a student-led initiative focused on helping our less fortunate peers through donation drives, support programs, and sustainable giving. We bring together communities to share clothing, supplies, and everyday essentials with those who need them most — while promoting kindness, unity, and impact.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Collaborators / Partners Section -->
+        <section id="collaborators" class="py-12 px-6 sm:px-12 max-w-5xl mx-auto">
+            <div class="text-center space-y-1 mb-6 reveal-slide-up">
+                <span class="text-[11px] font-bold tracking-widest uppercase text-sageAccent">Network & Partnerships</span>
+                <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-primaryText">Collaborators & Partners</h2>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 items-center justify-center text-center">
+                <div class="p-4 rounded-xl bg-white/60 border border-earthBorder backdrop-blur-sm reveal-scale delay-100 hover:border-burnishedGold transition">
+                    <p class="font-serif text-base text-primaryText font-bold">Nairobi City Academy</p>
+                    <p class="text-[10px] text-secondaryText uppercase tracking-wider font-semibold mt-0.5">Partner School</p>
+                </div>
+                <div class="p-4 rounded-xl bg-white/60 border border-earthBorder backdrop-blur-sm reveal-scale delay-200 hover:border-burnishedGold transition">
+                    <p class="font-serif text-base text-primaryText font-bold">St. Jude Community</p>
+                    <p class="text-[10px] text-secondaryText uppercase tracking-wider font-semibold mt-0.5">Education Hub</p>
+                </div>
+                <div class="p-4 rounded-xl bg-white/60 border border-earthBorder backdrop-blur-sm reveal-scale delay-300 hover:border-burnishedGold transition">
+                    <p class="font-serif text-base text-primaryText font-bold">Hillcrest Youth Network</p>
+                    <p class="text-[10px] text-secondaryText uppercase tracking-wider font-semibold mt-0.5">Student Advocates</p>
+                </div>
+                <div class="p-4 rounded-xl bg-white/60 border border-earthBorder backdrop-blur-sm reveal-scale delay-400 hover:border-burnishedGold transition">
+                    <p class="font-serif text-base text-primaryText font-bold">Valley View Primary</p>
+                    <p class="text-[10px] text-secondaryText uppercase tracking-wider font-semibold mt-0.5">Distribution Center</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Core Mission Section -->
+        <section id="mission" class="py-16 px-6 sm:px-12 bg-richBlack text-earthCream my-6 border-y border-richBlack relative overflow-hidden">
+            <div class="max-w-3xl mx-auto text-center space-y-4 relative z-10 reveal-fade">
+                <span class="text-[11px] font-bold tracking-widest uppercase text-softGold">THE CORE MISSION</span>
+                <blockquote class="font-serif text-2xl sm:text-4xl font-medium tracking-tight leading-snug text-earthCream">
+                    "By spreading the word you become a <span class="italic text-burnishedGold underline decoration-burnishedGold underline-offset-6">beacon of hope</span> that inspires transformation."
+                </blockquote>
+                <p class="text-earthCream/70 text-xs sm:text-sm font-light max-w-lg mx-auto">
+                    Every book passed along, every drive organized, and every voice raised becomes a steady foundation for our peers.
+                </p>
+            </div>
+        </section>
+
+        <!-- How We Work / Pillars Section -->
+        <section id="pillars" class="py-12 px-6 sm:px-12 max-w-5xl mx-auto space-y-8">
+            <div class="text-center space-y-1.5 max-w-md mx-auto reveal-slide-up">
+                <span class="text-[11px] font-bold tracking-widest uppercase text-sageAccent">Our Pillars</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-primaryText">How We Work</h2>
+                <p class="text-secondaryText text-xs">Grassroots initiatives engineered for sustainable community impact.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+                
+                <!-- Pillar 1 Card -->
+                <div class="bg-white/70 backdrop-blur-md border border-earthBorder rounded-xl p-6 space-y-4 hover:border-burnishedGold hover:shadow-lg hover:-translate-y-1 transition-all duration-300 reveal-slide-up delay-100 group">
+                    <div class="w-10 h-10 rounded-lg bg-burnishedGold/10 text-burnishedGold flex items-center justify-center group-hover:bg-burnishedGold group-hover:text-richBlack transition-colors duration-300">
+                        <i data-lucide="package" class="w-5 h-5"></i>
+                    </div>
+                    <span class="text-[10px] font-mono uppercase font-bold tracking-widest text-clayAccent">01 • Service</span>
+                    <h3 class="font-serif text-xl font-bold text-primaryText">Direct Service</h3>
+                    <p class="text-secondaryText text-xs font-normal leading-relaxed">
+                        Gathering and distributing textbooks, stationery, and essential garments straight to young students in need.
+                    </p>
+                </div>
+
+                <!-- Pillar 2 Card -->
+                <div class="bg-white/70 backdrop-blur-md border border-earthBorder rounded-xl p-6 space-y-4 hover:border-burnishedGold hover:shadow-lg hover:-translate-y-1 transition-all duration-300 reveal-slide-up delay-200 group">
+                    <div class="w-10 h-10 rounded-lg bg-burnishedGold/10 text-burnishedGold flex items-center justify-center group-hover:bg-burnishedGold group-hover:text-richBlack transition-colors duration-300">
+                        <i data-lucide="graduation-cap" class="w-5 h-5"></i>
+                    </div>
+                    <span class="text-[10px] font-mono uppercase font-bold tracking-widest text-clayAccent">02 • Learning</span>
+                    <h3 class="font-serif text-xl font-bold text-primaryText">Educational Stability</h3>
+                    <p class="text-secondaryText text-xs font-normal leading-relaxed">
+                        Supplying foundational learning tools to ensure uninterrupted school attendance and confidence.
+                    </p>
+                </div>
+
+                <!-- Pillar 3 Card -->
+                <div class="bg-white/70 backdrop-blur-md border border-earthBorder rounded-xl p-6 space-y-4 hover:border-burnishedGold hover:shadow-lg hover:-translate-y-1 transition-all duration-300 reveal-slide-up delay-300 group">
+                    <div class="w-10 h-10 rounded-lg bg-burnishedGold/10 text-burnishedGold flex items-center justify-center group-hover:bg-burnishedGold group-hover:text-richBlack transition-colors duration-300">
+                        <i data-lucide="megaphone" class="w-5 h-5"></i>
+                    </div>
+                    <span class="text-[10px] font-mono uppercase font-bold tracking-widest text-clayAccent">03 • Community</span>
+                    <h3 class="font-serif text-xl font-bold text-primaryText">Youth Advocacy</h3>
+                    <p class="text-secondaryText text-xs font-normal leading-relaxed">
+                        Mobilizing young individuals to champion equality of opportunity in their own residential sectors.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery" class="py-12 px-6 sm:px-12 max-w-5xl mx-auto space-y-6">
+            <div class="text-center space-y-1 max-w-md mx-auto reveal-slide-up">
+                <span class="text-[11px] font-bold tracking-widest uppercase text-burnishedGold">MOMENTS OF IMPACT</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-primaryText">Gallery</h2>
+                <p class="text-secondaryText text-xs">A glimpse into our community outreach, supply distribution drives, and shared smiles.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                <div class="relative rounded-xl overflow-hidden shadow-md border border-earthBorder group h-60 reveal-scale delay-100">
+                    <img src="IMG-20260711-WA0075-EDIT.jpg" alt="Project Lift outreach moment" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-richBlack/70 via-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                        <p class="text-earthCream text-xs font-medium">Supply Distribution Drive</p>
+                    </div>
+                </div>
+                <div class="relative rounded-xl overflow-hidden shadow-md border border-earthBorder group h-60 reveal-scale delay-200">
+                    <img src="IMG-20260711-WA0075-EDIT.jpg" alt="Community support session" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-richBlack/70 via-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                        <p class="text-earthCream text-xs font-medium">Student Engagement</p>
+                    </div>
+                </div>
+                <div class="relative rounded-xl overflow-hidden shadow-md border border-earthBorder group h-60 reveal-scale delay-300 sm:col-span-2 md:col-span-1">
+                    <img src="IMG-20260711-WA0075-EDIT.jpg" alt="Volunteer teamwork" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-richBlack/70 via-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                        <p class="text-earthCream text-xs font-medium">Our Dedicated Volunteers</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Action Hub Section -->
+        <section id="action" class="py-12 px-6 sm:px-12 max-w-5xl mx-auto space-y-8 border-t border-earthBorder mt-8">
+            <div class="text-center space-y-1 max-w-md mx-auto reveal-slide-up">
+                <span class="text-[11px] font-bold tracking-widest uppercase text-burnishedGold">MAKING THE DIFFERENCE</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-primaryText">How You Can Support</h2>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+                
+                <!-- Card 1: Financial Support -->
+                <div class="bg-darkGrayCard text-earthCream rounded-xl p-6 sm:p-8 flex flex-col justify-between shadow-lg border-t-4 border-burnishedGold space-y-5 reveal-slide-up delay-100">
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center border-b border-earthCream/10 pb-2">
+                            <span class="text-[10px] font-mono uppercase font-bold tracking-widest text-softGold">MOBILE PAY</span>
+                        </div>
+                        
+                        <h3 class="font-serif text-2xl font-bold">Financial Support</h3>
+                        <p class="text-earthCream/80 text-xs font-light leading-relaxed">
+                            Through donating to the Lift Movement, Project Lift is able to lift a child and give them a fair chance in the world.
+                        </p>
+                        
+                        <div class="space-y-1.5 font-mono text-xs text-earthCream/90 pt-1 bg-black/30 p-3 rounded-lg border border-white/10">
+                            <div class="flex justify-between border-b border-earthCream/10 pb-1.5">
+                                <span class="text-earthCream/50">PAYBILL:</span>
+                                <span class="font-bold tracking-wider text-softGold">891300</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-earthCream/50">ACCOUNT:</span>
+                                <span class="font-bold tracking-wider text-softGold">142977</span>
+                            </div>
+                        </div>
+
+                        <!-- STK Push Form -->
+                        <form id="stkPushForm" class="space-y-3 pt-1">
+                            <div>
+                                <label class="block text-[11px] font-medium text-earthCream/70 mb-1">Phone Number (M-Pesa)</label>
+                                <input type="tel" id="stkPhone" placeholder="0712345678" required class="w-full bg-white/10 border border-earthCream/20 rounded-lg px-3 py-2 text-xs text-earthCream focus:outline-none focus:border-softGold transition placeholder:text-earthCream/40">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-medium text-earthCream/70 mb-1">Amount (KES)</label>
+                                <input type="number" id="stkAmount" placeholder="250" min="10" required class="w-full bg-white/10 border border-earthCream/20 rounded-lg px-3 py-2 text-xs text-earthCream focus:outline-none focus:border-softGold transition placeholder:text-earthCream/40">
+                            </div>
+                            <button type="submit" id="stkBtn" class="w-full bg-burnishedGold hover:bg-softGold text-richBlack font-bold py-3 rounded-lg text-[11px] tracking-widest uppercase transition duration-300 shadow">
+                                Prompt STK Push
+                            </button>
+                        </form>
+
+                        <div id="stkStatus" class="hidden text-center p-2.5 rounded-lg bg-softGold/10 text-[11px] text-softGold font-mono"></div>
+                    </div>
+                </div>
+
+                <!-- Card 2: Host a Drive -->
+                <div class="bg-darkGrayCard text-earthCream rounded-xl p-6 sm:p-8 flex flex-col justify-between shadow-lg border-t-4 border-sageAccent space-y-5 reveal-slide-up delay-200">
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center border-b border-earthCream/10 pb-2">
+                            <span class="text-[10px] font-mono uppercase font-bold tracking-widest text-sageAccent">ORGANIZING</span>
+                        </div>
+
+                        <h3 class="font-serif text-2xl font-bold">Host a Supply Drive</h3>
+                        <p class="text-earthCream/80 text-xs font-light leading-relaxed">
+                            Organize a book, shoe, or stationery collection at your school or local center. We provide full planning toolkits and pickup logistics.
+                        </p>
+
+                        <ul class="space-y-2.5 text-xs text-earthCream/80 font-light pt-1">
+                            <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-3.5 h-3.5 text-burnishedGold shrink-0"></i> <span>Custom Drive Planning Toolkit</span></li>
+                            <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-3.5 h-3.5 text-burnishedGold shrink-0"></i> <span>Local Collection & Dispatch Assistance</span></li>
+                            <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-3.5 h-3.5 text-burnishedGold shrink-0"></i> <span>Direct Recipient Impact Statements</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="pt-3 border-t border-earthCream/10 mt-auto">
+                        <a href="mailto:projectlift426@gmail.com?subject=Host%20a%20Drive" class="block text-center w-full bg-white/10 hover:bg-white/20 border border-earthCream/20 text-earthCream font-bold py-3 rounded-lg text-[11px] tracking-widest uppercase transition duration-300">
+                            Start a Drive
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Social Connections Section -->
+        <section id="connect" class="py-12 bg-sectionBackground/60 border-t border-earthBorder px-6 sm:px-12">
+            <div class="max-w-5xl mx-auto text-center space-y-6">
+                <div class="space-y-1 reveal-slide-up">
+                    <span class="text-[11px] font-bold tracking-widest uppercase text-burnishedGold">CONNECT WITH US</span>
+                    <h2 class="text-2xl sm:text-4xl font-serif font-bold text-primaryText">Stay Connected</h2>
+                    <p class="text-secondaryText max-w-sm mx-auto text-xs font-normal">
+                        Follow Project Lift across our channels for live updates from supply distribution drives.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <a href="https://instagram.com/projectlift426" target="_blank" class="group bg-white/70 backdrop-blur-sm rounded-xl p-5 border border-earthBorder hover:border-burnishedGold transition duration-300 flex flex-col items-center reveal-scale delay-100">
+                        <div class="w-10 h-10 rounded-full bg-earthBackground flex items-center justify-center text-burnishedGold group-hover:bg-burnishedGold group-hover:text-richBlack transition text-lg">
+                            <i data-lucide="instagram" class="w-4 h-4"></i>
+                        </div>
+                        <h3 class="text-base font-bold text-primaryText mt-2">Instagram</h3>
+                        <p class="text-secondaryText text-[11px] mt-0.5">@projectlift426</p>
+                        <p class="mt-3 text-burnishedGold text-xs font-bold">Follow Us &rarr;</p>
+                    </a>
+
+                    <a href="https://tiktok.com/@projectlift195" target="_blank" class="group bg-white/70 backdrop-blur-sm rounded-xl p-5 border border-earthBorder hover:border-burnishedGold transition duration-300 flex flex-col items-center reveal-scale delay-200">
+                        <div class="w-10 h-10 rounded-full bg-earthBackground flex items-center justify-center text-burnishedGold group-hover:bg-burnishedGold group-hover:text-richBlack transition text-lg">
+                            <i data-lucide="video" class="w-4 h-4"></i>
+                        </div>
+                        <h3 class="text-base font-bold text-primaryText mt-2">TikTok</h3>
+                        <p class="text-secondaryText text-[11px] mt-0.5">@projectlift195</p>
+                        <p class="mt-3 text-burnishedGold text-xs font-bold">Watch Videos &rarr;</p>
+                    </a>
+
+                    <a href="mailto:projectlift426@gmail.com" class="group bg-white/70 backdrop-blur-sm rounded-xl p-5 border border-earthBorder hover:border-burnishedGold transition duration-300 flex flex-col items-center reveal-scale delay-300">
+                        <div class="w-10 h-10 rounded-full bg-earthBackground flex items-center justify-center text-burnishedGold group-hover:bg-burnishedGold group-hover:text-richBlack transition text-lg">
+                            <i data-lucide="mail" class="w-4 h-4"></i>
+                        </div>
+                        <h3 class="text-base font-bold text-primaryText mt-2">Gmail</h3>
+                        <p class="text-secondaryText text-[11px] mt-0.5 break-all">projectlift426@gmail.com</p>
+                        <p class="mt-3 text-burnishedGold text-xs font-bold">Send Email &rarr;</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-earthBorder bg-earthBackground py-8 px-6 sm:px-12 text-xs text-secondaryText">
+        <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+            <div class="space-y-1.5 md:col-span-1">
+                <span class="font-serif text-xl font-bold text-primaryText block uppercase tracking-wider">
+                    Project <span class="text-burnishedGold">Lift</span>
+                </span>
+                <p class="text-[11px] font-normal leading-relaxed">Helping communities rise together through youth action, donation drives, and educational care.</p>
+            </div>
+            
+            <div class="space-y-1 text-xs">
+                <p class="font-bold text-primaryText uppercase tracking-wider mb-1.5">Navigation</p>
+                <p><a href="#about" class="hover:text-burnishedGold transition">Who We Are</a></p>
+                <p><a href="#collaborators" class="hover:text-burnishedGold transition">Collaborators</a></p>
+                <p><a href="#mission" class="hover:text-burnishedGold transition">Our Mission</a></p>
+                <p><a href="#pillars" class="hover:text-burnishedGold transition">Pillars</a></p>
+                <p><a href="#gallery" class="hover:text-burnishedGold transition">Gallery</a></p>
+            </div>
+
+            <div class="space-y-1 text-xs">
+                <p class="font-bold text-primaryText uppercase tracking-wider mb-1.5">Involvement</p>
+                <p><a href="#action" class="hover:text-burnishedGold transition">Donate Funds</a></p>
+                <p><a href="#action" class="hover:text-burnishedGold transition">Host a Drive</a></p>
+                <p><a href="#connect" class="hover:text-burnishedGold transition">Volunteer Network</a></p>
+            </div>
+
+            <div class="space-y-1 text-xs">
+                <p class="font-bold text-primaryText uppercase tracking-wider mb-1.5">Direct Reach</p>
+                <p>Nairobi, Kenya</p>
+                <p>projectlift426@gmail.com</p>
+                <p class="font-handwriting text-xl text-clayAccent pt-0.5">Inua Aliye Kando Yako</p>
+            </div>
+        </div>
+
+        <div class="max-w-5xl mx-auto border-t border-earthBorder pt-3 flex flex-col sm:flex-row justify-between items-center text-[11px] font-normal gap-2">
+            <p>&copy; 2026 Project Lift. All rights reserved.</p>
+            <p class="text-secondaryText">Inua Aliye Kando Yako</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        lucide.createIcons();
+
+        const navbar = document.getElementById('navbar');
+        const progressBar = document.getElementById('progressBar');
+
+        window.addEventListener('scroll', () => {
+            const winScroll = document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            progressBar.style.width = scrolled + "%";
+
+            if (winScroll > 30) {
+                navbar.classList.add('bg-[#F9F6F0]/90', 'backdrop-blur-md', 'border-earthBorder');
+                navbar.classList.remove('border-transparent');
+            } else {
+                navbar.classList.remove('bg-[#F9F6F0]/90', 'backdrop-blur-md', 'border-earthBorder');
+                navbar.classList.add('border-transparent');
+            }
+        });
+
+        // Scroll Reveals & Counter Animations
+        const revealElements = document.querySelectorAll('.reveal-fade, .reveal-slide-up, .reveal-scale');
+
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+
+                    const counters = entry.target.querySelectorAll('.counter');
+                    if (entry.target.classList.contains('counter')) {
+                        animateCounter(entry.target);
+                    } else if (counters.length > 0) {
+                        counters.forEach(c => animateCounter(c));
+                    }
+
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.15,
+            rootMargin: '0px 0px -30px 0px'
+        });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        function animateCounter(counter) {
+            if (counter.classList.contains('has-animated')) return;
+            counter.classList.add('has-animated');
+
+            const target = +counter.getAttribute('data-target');
+            let count = 0;
+            const speed = Math.max(target / 40, 1);
+
+            const updateCount = () => {
+                count += speed;
+                if (count < target) {
+                    counter.innerText = Math.ceil(count);
+                    setTimeout(updateCount, 30);
+                } else {
+                    counter.innerText = target;
+                }
+            };
+            updateCount();
+        }
+
+        // STK Push Prompt Handler
+        const stkForm = document.getElementById("stkPushForm");
+        const stkStatus = document.getElementById("stkStatus");
+        const stkBtn = document.getElementById("stkBtn");
+
+        stkForm.addEventListener("submit", function(e) {
+            e.preventDefault();
+            const phone = document.getElementById("stkPhone").value;
+            const amount = document.getElementById("stkAmount").value;
+
+            stkBtn.textContent = "Sending Prompt...";
+            stkBtn.disabled = true;
+            stkStatus.classList.remove("hidden");
+            stkStatus.textContent = `Sending STK Push to ${phone}...`;
+
+            setTimeout(() => {
+                stkStatus.textContent = `Prompt sent to ${phone}. Enter your M-Pesa PIN on your phone to send KES ${amount} to Paybill 891300.`;
+                stkBtn.textContent = "Prompt STK Push";
+                stkBtn.disabled = false;
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
